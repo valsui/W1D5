@@ -2,6 +2,7 @@ class KnightPathFinder
 
   def initialize(pos)
     @init_pos = pos
+    @visited_moves = [pos]
   end
 
   def self.valid_moves(pos)
@@ -22,8 +23,11 @@ class KnightPathFinder
     p self.class.valid_moves
   end
 
-  def new_move_postions
-
+  def new_move_postions(pos)
+    valid_positions = self.class.valid_moves(pos)
+    valid_positions -= @visited_moves
+    @visited_moves += valid_positions
+    valid_positions
   end
 
 end
