@@ -138,7 +138,9 @@ describe 'Searchable' do
     it_behaves_like 'search method'
 
     it "should take correct path to descendant" do
+
       expect(nodes[6]).to_not receive(:value)
+
       [0, 1, 2, 3, 4, 5].each do |index|
         expect(nodes[index]).to receive(:value).and_call_original.ordered
       end
