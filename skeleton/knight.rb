@@ -1,3 +1,5 @@
+require 'byebug'
+
 class KnightPathFinder
 
   def initialize(pos)
@@ -19,14 +21,30 @@ class KnightPathFinder
     ans
   end
 
-  def print_moves
-    p self.class.valid_moves
+  def new_move_positions(pos)
+    valid_positions = self.class.valid_moves(pos)
+    p "current visited moves: #{@visited_moves}"
+    valid_positions -= @visited_moves
+    p "valid positions after removing visited: #{valid_positions}"
+    @visited_moves += valid_positions
+    p "valid positions for #{pos} are : #{valid_positions}"
+    p " -----------------------"
+    valid_positions
   end
 
-  def new_move_postions(pos)
-    valid_positions = self.class.valid_moves(pos)
-    valid_positions -= @visited_moves
-    @visited_moves += valid_positions
+  def build_move_tree
+    tree = [@init_pos]
+    # debugger
+    valid_positions = new_move_positions(@init_pos)
+    valid_positions.each do |move|
+      memo = new_move_positions(move)
+      p "move: #{move}"
+      p "adding to valid positions: #{ memo}"
+      p "--------------------"
+      valid_positions += memo
+      break if memo.empty?
+
+    end
     valid_positions
   end
 
